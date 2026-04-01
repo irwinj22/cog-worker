@@ -18,8 +18,13 @@ RUN apt-get update && apt-get upgrade -y && \
 # Create a virtual environment
 RUN python3 -m venv /opt/venv
 
-# Install runpod within the virtual environment
-RUN /opt/venv/bin/pip install runpod
+# Install runpod and huggingface_hub
+RUN /opt/venv/bin/pip install runpod huggingface_hub
+
+# Download ACE-Step weights at build time to the default cache path
+RUN /opt/venv/bin/python3 -c "\
+from huggingface_hub import snapshot_download; \
+snapshot_download(repo_id='ACE-Step/ACE-Step-v1-3.5B', local_dir='/root/.cache/ace-step/checkpoints')"
 
 ADD src/handler.py /rp_handler.py
 
