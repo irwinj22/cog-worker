@@ -25,7 +25,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ace-step-runpod:v1.0.0
+          tags: | 
+                ${{ secrets.DOCKERHUB_USERNAME }}/ace-step-runpod:v1.0.0
                 ${{ secrets.DOCKERHUB_USERNAME }}/ace-step-runpod:latest
           build-args: |
             COG_REPO=lucataco
