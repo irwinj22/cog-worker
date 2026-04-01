@@ -18,13 +18,14 @@ RUN apt-get update && apt-get upgrade -y && \
 # Create a virtual environment
 RUN python3 -m venv /opt/venv
 
-# Install runpod and huggingface_hub
-RUN /opt/venv/bin/pip install runpod huggingface_hub
+# Install runpod within the virtual environment
+RUN /opt/venv/bin/pip install runpod
 
-# Download ACE-Step weights at build time to the default cache path
-RUN /opt/venv/bin/python3 -c "\
-from huggingface_hub import snapshot_download; \
-snapshot_download(repo_id='ACE-Step/ACE-Step-v1-3.5B', local_dir='/root/.cache/ace-step/checkpoints')"
+# Download ACE-Step weights at build time to match where predict.py expects them
+RUN curl -o /usr/local/bin/pget -L "https://github.com/replicate/pget/releases/latest/download/pget_linux_x86_64" && \
+    chmod +x /usr/local/bin/pget && \
+    mkdir -p /src/checkpoints && \
+    pget -x https://weights.replicate.delivery/default/ACE-Step/ACE-Step-v1-3.5B/model.tar /src/checkpoints
 
 ADD src/handler.py /rp_handler.py
 
