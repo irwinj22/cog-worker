@@ -29,4 +29,4 @@ jobs:
           build-args: |
             COG_REPO=lucataco
             COG_MODEL=ace-step
-            COG_VERSION=280fc4f9ee507577f880a167f639c02622421d8fecf492454320311217b688f1s
+            COG_VERSION=280fc4f9ee507577f880a167f639c02622421d8fecf492454320311217b688f1
