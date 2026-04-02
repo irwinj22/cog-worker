@@ -22,7 +22,7 @@ RUN python3 -m venv /opt/venv
 RUN /opt/venv/bin/pip install runpod
 
 # Download ACE-Step weights at build time to match where predict.py expects them
-RUN curl -o /usr/local/bin/pget -L "https://github.com/replicate/pget/releases/latest/download/pget_linux_x86_64" && \
+RUN curl -o /usr/local/bin/pget -L "https://github.com/replicate/pget/releases/latest/download/pget_$(uname -s)_$(uname -m)" && \
     chmod +x /usr/local/bin/pget && \
     mkdir -p /src/checkpoints && \
     pget -x https://weights.replicate.delivery/default/ACE-Step/ACE-Step-v1-3.5B/model.tar /src/checkpoints
