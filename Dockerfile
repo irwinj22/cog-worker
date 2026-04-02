@@ -24,8 +24,10 @@ RUN /opt/venv/bin/pip install runpod
 # Download ACE-Step weights at build time to match where predict.py expects them
 RUN curl -o /usr/local/bin/pget -L "https://github.com/replicate/pget/releases/latest/download/pget_$(uname -s)_$(uname -m)" && \
     chmod +x /usr/local/bin/pget && \
+    rm -rf /src/checkpoints && \
     mkdir -p /src/checkpoints && \
     pget -x https://weights.replicate.delivery/default/ACE-Step/ACE-Step-v1-3.5B/model.tar /src/checkpoints
+
 
 ADD src/handler.py /rp_handler.py
 
